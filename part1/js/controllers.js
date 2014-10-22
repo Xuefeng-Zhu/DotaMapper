@@ -2,7 +2,7 @@
 
 /* Controllers */
 var result = []
-var matchAPI = "http://localhost:5000/match/";
+var matchAPI = "http://limitless-falls-1957.herokuapp.com/match/";
 
 angular.module('myApp.controllers', []).
 controller('VisualCtrl', ['$scope', '$rootScope', '$http',
