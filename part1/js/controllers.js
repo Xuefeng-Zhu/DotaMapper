@@ -13,11 +13,10 @@ controller('VisualCtrl', ['$scope', '$rootScope', '$http',
         addMatch($rootScope.matchID);
         $scope.matchID = "";
 
-        $scope.addMacth = function(){
-            if ($scope.matchID == ""){
+        $scope.addMacth = function() {
+            if ($scope.matchID == "") {
                 return;
-            }
-            else{
+            } else {
                 addMatch($scope.matchID);
                 $scope.matchID = "";
             }
@@ -30,14 +29,14 @@ controller('VisualCtrl', ['$scope', '$rootScope', '$http',
                     var votes = result.positive_votes - result.negative_votes;
                     var players = result.players;
 
-                    $scope.data[0].push(""+id);
-                    for (var i = 1; i < $scope.data.length; i++){
+                    $scope.data[0].push("" + id);
+                    for (var i = 1; i < $scope.data.length; i++) {
                         $scope.data[i].push(null);
                     }
 
                     for (var i in players) {
                         var temp = [votes]
-                        for (var j = 0; j < $scope.data[0].length - 2; j++){
+                        for (var j = 0; j < $scope.data[0].length - 2; j++) {
                             temp.push(null);
                         }
                         temp.push(players[i].kills - players[i].deaths);
@@ -49,14 +48,20 @@ controller('VisualCtrl', ['$scope', '$rootScope', '$http',
                         hAxis: {
                             title: 'Votes',
                             minValue: -15,
-                            maxValue: 15
+                            maxValue: 15,
+                            gridlines: {
+                                color: 'transparent'
+                            }
                         },
                         vAxis: {
                             title: 'Kill/Death',
                             minValue: -15,
-                            maxValue: 15
+                            maxValue: 15,
+                            gridlines: {
+                                color: 'transparent'
+                            }
                         },
-                        legend: 'none'
+                        height: 600
                     };
 
                     var chart = new google.visualization.ScatterChart(document.getElementById('visualization'));
