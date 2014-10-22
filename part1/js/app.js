@@ -14,3 +14,5 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: 'MainCtrl'});
   $routeProvider.otherwise({redirectTo: '/main'});
 }]);
+
+google.load("visualization", "1", {packages:["corechart"]});
