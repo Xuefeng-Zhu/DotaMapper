@@ -71,11 +71,94 @@ controller('VisualCtrl', ['$scope', '$rootScope', '$http',
         }
     }
 ])
-    .controller('MainCtrl', ['$scope', '$rootScope', '$location',
+    .controller('VisualCtrl2', ['$scope', '$rootScope', '$http',
+        function($scope, $rootScope, $http) {
+            $http.get(matchAPI + $rootScope.matchID)
+                .then(function(res) {
+                    var result = res.data.result;
+                    var players = result.players;
+
+                    var gold_data = [];
+                    var kills_data = [];
+                    var deaths_data = [];
+                    var assists_data = [];
+                    for (var i = 0; i < players.length; i++) {
+                        var group = i < players.length / 2 ? "group 1" : "group 2";
+                        gold_data.push({
+                            value: players[i].gold_spent,
+                            name: players[i].player_slot + 1,
+                            group: group
+                        });
+
+                        kills_data.push({
+                            value: players[i].kills,
+                            name: players[i].player_slot + 1,
+                            group: group
+                        });
+
+                        deaths_data.push({
+                            value: players[i].deaths,
+                            name: players[i].player_slot + 1,
+                            group: group
+                        });
+
+                        assists_data.push({
+                            value: players[i].assists,
+                            name: players[i].player_slot + 1,
+                            group: group
+                        });
+                    }
+
+                    var gold_visualization = d3plus.viz()
+                        .container("#gold")
+                        .data(gold_data)
+                        .type("tree_map")
+                        .id(["group", "name"])
+                        .size("value")
+                        .draw();
+
+                    var kills_visualization = d3plus.viz()
+                        .container("#kills")
+                        .data(kills_data)
+                        .type("tree_map")
+                        .id(["group", "name"])
+                        .size("value")
+                        .draw();
+
+                    var deaths_visualization = d3plus.viz()
+                        .container("#deaths")
+                        .data(deaths_data)
+                        .type("tree_map")
+                        .id(["group", "name"])
+                        .size("value")
+                        .draw();
+
+                    var assists_visualization = d3plus.viz()
+                        .container("#assists")
+                        .data(assists_data)
+                        .type("tree_map")
+                        .id(["group", "name"])
+                        .size("value")
+                        .draw();
+                })
+        }
+    ])
+
+.controller('MainCtrl', ['$scope', '$rootScope', '$location',
+    function($scope, $rootScope, $location) {
+        $rootScope.matchID = "";
+        $scope.visualize = function() {
+            $rootScope.matchID = $scope.matchID;
+            $location.path("visualization");
+        }
+    }
+])
+    .controller('MainCtrl2', ['$scope', '$rootScope', '$location',
         function($scope, $rootScope, $location) {
+            $rootScope.matchID = "";
             $scope.visualize = function() {
                 $rootScope.matchID = $scope.matchID;
-                $location.path("visualization");
+                $location.path("visualization2");
             }
         }
     ]);
